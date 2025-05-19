@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_18_104440) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_19_235320) do
+  create_table "editors", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_editors_on_post_id"
+    t.index ["user_id"], name: "index_editors_on_user_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -27,5 +36,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_18_104440) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "editors", "posts"
+  add_foreign_key "editors", "users"
   add_foreign_key "posts", "users", column: "creator_id"
 end
